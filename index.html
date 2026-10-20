@@ -425,15 +425,25 @@ document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{
 }));
 function sel(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);say('Texto seleccionado: usa Ctrl+C / Cmd+C')}
 
-function handle(form,emailId,msgId){
-  document.getElementById(form).addEventListener('submit',e=>{
+const KIT_URL='https://app.kit.com/forms/10073455/subscriptions';
+function handle(form,emailId,msgId,nameId){
+  const f=document.getElementById(form);
+  f.addEventListener('submit',async e=>{
     e.preventDefault();
     const v=document.getElementById(emailId).value.trim();const m=document.getElementById(msgId);
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){m.textContent='Escribe un correo válido, por ejemplo tu@correo.com';return}
-    m.textContent='Listo. Prototipo: en el sitio real esto se conecta a tu lista de correo.';
+    const btn=f.querySelector('button[type=submit]');btn.disabled=true;m.textContent='Enviando…';
+    const data=new FormData();data.append('email_address',v);
+    const n=nameId&&document.getElementById(nameId);if(n&&n.value.trim())data.append('fields[first_name]',n.value.trim());
+    let ok=false;
+    try{const r=await fetch(KIT_URL,{method:'POST',body:data,headers:{Accept:'application/json'}});ok=r.ok;}
+    catch(_){try{await fetch(KIT_URL,{method:'POST',body:data,mode:'no-cors'});ok=true}catch(__){ok=false}}
+    btn.disabled=false;
+    if(ok){f.reset();m.textContent='¡Listo! Revisa tu correo para confirmar tu suscripción.'}
+    else{m.textContent='No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.'}
   });
 }
-handle('subForm','sub-email','subMsg');handle('inlineForm','inline-email','inlineMsg');
+handle('subForm','sub-email','subMsg','sub-name');handle('inlineForm','inline-email','inlineMsg');
 </script>
 </body>
 </html>
