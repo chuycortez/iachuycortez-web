@@ -435,12 +435,16 @@ function handle(form,emailId,msgId,nameId){
     const btn=f.querySelector('button[type=submit]');btn.disabled=true;m.textContent='Enviando…';
     const data=new FormData();data.append('email_address',v);
     const n=nameId&&document.getElementById(nameId);if(n&&n.value.trim())data.append('fields[first_name]',n.value.trim());
-    let ok=false;
-    try{const r=await fetch(KIT_URL,{method:'POST',body:data,headers:{Accept:'application/json'}});ok=r.ok;}
-    catch(_){try{await fetch(KIT_URL,{method:'POST',body:data,mode:'no-cors'});ok=true}catch(__){ok=false}}
+    let ok=false,why='';
+    try{
+      const r=await fetch(KIT_URL,{method:'POST',body:data,headers:{Accept:'application/json'}});
+      const j=await r.json().catch(()=>({}));
+      ok=r.ok&&j.status!=='failed';
+      if(!ok)why=(j.errors&&j.errors.messages||[]).join(' ');
+    }catch(_){why='No se pudo conectar.'}
     btn.disabled=false;
-    if(ok){f.reset();m.textContent='¡Listo! Revisa tu correo para confirmar tu suscripción.'}
-    else{m.textContent='No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.'}
+    if(ok){f.reset();m.textContent='¡Listo! Revisa tu correo (y Spam o Promociones) para confirmar tu suscripción.'}
+    else{m.textContent='No se pudo suscribir'+(why?': '+why:'.')+' Inténtalo de nuevo.';console.warn('Kit:',why)}
   });
 }
 handle('subForm','sub-email','subMsg','sub-name');handle('inlineForm','inline-email','inlineMsg');
