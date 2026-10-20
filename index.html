@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="La IA explicada en español, para negocios reales. Guías, videos y prompts para copiar y pegar.">
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
+<title>IA con Chuy Cortez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: revista de una columna; bloques a todo lo ancho que alternan crema y verde, como un show de radio por segmentos */
+:root{
+  --bg:#F4F7F5;        /* fondo claro GrowLocal */
+  --bg-2:#EEF3F0;      /* superficie */
+  --fg:#062A25;        /* verde profundo */
+  --muted:#46574F;
+  --green:#0B7A63;     /* verde de marca */
+  --green-ink:#F4F7F5; /* texto sobre verde */
+  --lime:#6FE2AE;      /* menta, acento puntual */
+  --line:#B6CCC7;
+  --code-bg:#062A25; --code-fg:#EEF3F0;
+  --display:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;
+  --accent:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;
+  --body:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#04201C;--bg-2:#0A2E28;--fg:#EEF3F0;--muted:#A6BCB7;--green:#2FA383;--green-ink:#F4F7F5;--lime:#6FE2AE;--line:#1B4038;--code-bg:#021613;--code-fg:#EEF3F0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#04201C;--bg-2:#0A2E28;--fg:#EEF3F0;--muted:#A6BCB7;--green:#2FA383;--green-ink:#F4F7F5;--lime:#6FE2AE;--line:#1B4038;--code-bg:#021613;--code-fg:#EEF3F0;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:.5em;font:700 14px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;padding:14px 22px;border-radius:999px;border:2px solid var(--fg);background:var(--fg);color:var(--bg);text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--fg)}
+.btn:focus-visible,button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo{font:400 26px/1 var(--display);letter-spacing:.01em;text-transform:uppercase;color:var(--green);text-decoration:none;cursor:pointer}
+.logo i{font:italic 22px/1 var(--accent);text-transform:none;color:var(--fg);margin:0 .12em}
+nav.main{display:flex;gap:22px;align-items:center}
+nav.main a{font:500 14px/1 var(--body);text-decoration:none;cursor:pointer}
+nav.main a:hover{color:var(--green)}
+@media (max-width:760px){nav.main a.hide-sm{display:none}}
+
+/* hero */
+.hero{padding-block:56px 40px}
+.hero h1{font:400 clamp(64px,15vw,200px)/.86 var(--display);text-transform:uppercase;letter-spacing:-.01em}
+.hero h1 em{font:italic 400 .62em/1 var(--accent);text-transform:none;color:var(--green);letter-spacing:0;padding:0 .08em}
+.hero-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end;margin-top:28px}
+@media (max-width:820px){.hero-grid{grid-template-columns:1fr}}
+.photo{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:24px;background:
+  repeating-linear-gradient(135deg,transparent 0 14px,color-mix(in srgb,var(--green) 10%,transparent) 14px 15px),var(--bg-2);
+  border:2px dashed var(--line);display:grid;place-items:center;text-align:center;padding:24px}
+.photo span{font:500 13px/1.4 var(--mono);color:var(--muted)}
+.tag{position:absolute;background:var(--green);color:var(--green-ink);font:700 12px/1.25 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;border-radius:12px;box-shadow:0 6px 0 var(--fg)}
+.tag.t1{top:8%;left:-10px;transform:rotate(-4deg)}
+.tag.t2{top:42%;right:-10px;transform:rotate(3deg);background:var(--lime);color:#062A25}
+.tag.t3{bottom:9%;left:8%;transform:rotate(-2deg)}
+@media (max-width:820px){.tag.t1{left:8px}.tag.t2{right:8px}}
+.intro p{max-width:56ch;margin:0 0 1em}
+.intro .lead{font:italic 400 clamp(30px,4vw,44px)/1.1 var(--accent);color:var(--green);margin-bottom:.6em}
+.intro .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+
+/* marquee */
+.marquee{background:var(--green);color:var(--green-ink);overflow:hidden;border-block:2px solid var(--fg)}
+.marquee .track{display:flex;width:max-content;animation:run 28s linear infinite;padding-block:14px}
+.marquee span{font:400 28px/1 var(--display);text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;padding-right:28px}
+.marquee b{color:var(--lime);font-weight:400}
+@keyframes run{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee .track{animation:none}}
+
+/* sections */
+section.block{padding-block:72px}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.sec-head h2{font:400 clamp(44px,7vw,84px)/.9 var(--display);text-transform:uppercase}
+.sec-head h2 em{font:italic 400 .7em var(--accent);text-transform:none;color:var(--green)}
+.sec-head p{max-width:44ch;margin:0;color:var(--muted)}
+
+/* workshop */
+.workshop{background:var(--fg);color:var(--bg)}
+.workshop .wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+@media (max-width:820px){.workshop .wrap{grid-template-columns:1fr}}
+.workshop h2{font:400 clamp(48px,7vw,92px)/.9 var(--display);text-transform:uppercase}
+.workshop h2 em{font:italic 400 .7em var(--accent);color:var(--lime);text-transform:none}
+.days{display:grid;gap:12px}
+.day{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;border-top:1px solid color-mix(in srgb,var(--bg) 25%,transparent);padding-top:14px}
+.day b{font:400 34px/1 var(--display);color:var(--lime)}
+.day p{margin:0}
+.day small{display:block;font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.workshop .btn{background:var(--lime);color:#062A25;border-color:var(--lime);margin-top:24px}
+
+/* paths */
+.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:900px){.paths{grid-template-columns:1fr}}
+.path{background:var(--bg-2);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.path .kind{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--green)}
+.path h3{font:400 34px/1 var(--display);text-transform:uppercase}
+.path p{margin:0;color:var(--muted);flex:1}
+.path a{font:700 14px/1 var(--body);text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--green);cursor:pointer}
+
+/* content grid */
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 13px/1 var(--body);padding:10px 16px;border-radius:999px;border:1.5px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{border-top:3px solid var(--fg);padding-top:16px;display:flex;flex-direction:column;gap:10px;min-width:0;cursor:pointer}
+.card:hover h3{color:var(--green)}
+.card .meta{display:flex;gap:10px;align-items:center}
+.pill{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;border-radius:6px;background:var(--green);color:var(--green-ink)}
+.pill.video{background:var(--lime);color:#062A25}
+.pill.prompt{background:transparent;color:var(--fg);border:1.5px solid var(--fg)}
+.card .time{font:400 12px/1 var(--mono);color:var(--muted)}
+.card h3{font:400 28px/1.02 var(--display);text-transform:uppercase}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .go{font:700 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--green);margin-top:auto}
+.sample-note{font:400 12px/1.4 var(--mono);color:var(--muted);margin-top:24px}
+
+/* prompt block */
+.prompt-box{background:var(--code-bg);color:var(--code-fg);border-radius:16px;overflow:hidden;min-width:0}
+.prompt-box .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #2C3A32}
+.prompt-box .bar span{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#6FE2AE}
+.copy{font:700 12px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;border-radius:999px;border:0;background:#6FE2AE;color:#062A25;cursor:pointer}
+.prompt-box pre{margin:0;padding:20px;font:400 14px/1.65 var(--mono);white-space:pre-wrap;overflow-x:auto}
+
+/* subscribe */
+.subscribe{background:var(--green);color:var(--green-ink)}
+.subscribe .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+@media (max-width:820px){.subscribe .wrap{grid-template-columns:1fr}}
+.subscribe h2{font:400 clamp(48px,7vw,88px)/.9 var(--display);text-transform:uppercase}
+.subscribe h2 em{font:italic 400 .7em var(--accent);color:var(--lime);text-transform:none}
+.subscribe p{max-width:46ch}
+form.sub{display:grid;gap:10px}
+form.sub label{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+form.sub input{font:400 17px var(--body);padding:16px 18px;border-radius:12px;border:2px solid var(--green-ink);background:transparent;color:var(--green-ink);width:100%}
+form.sub input::placeholder{color:color-mix(in srgb,var(--green-ink) 60%,transparent)}
+form.sub button{font:700 15px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;padding:18px;border-radius:12px;border:0;background:var(--lime);color:#062A25;cursor:pointer}
+.form-msg{font:500 14px/1.4 var(--body);min-height:1.4em}
+
+/* guide view */
+.guide{padding-block:48px 72px}
+.guide .back{font:700 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--green);cursor:pointer}
+.guide h1{font:400 clamp(52px,9vw,120px)/.88 var(--display);text-transform:uppercase;margin:24px 0 8px}
+.guide h1 em{display:block;font:italic 400 .42em/1.2 var(--accent);color:var(--green);text-transform:none}
+.guide .byline{display:flex;gap:16px;flex-wrap:wrap;font:400 13px/1 var(--mono);color:var(--muted);margin-bottom:32px}
+.article{max-width:720px}
+.article h2{font:400 40px/1 var(--display);text-transform:uppercase;margin:48px 0 12px}
+.article p{margin:0 0 1em}
+.video{aspect-ratio:16/9;max-width:100%;border-radius:16px;background:var(--fg);color:var(--bg);display:grid;place-items:center;text-align:center;padding:16px;margin:8px 0 12px}
+.video .play{width:72px;height:72px;border-radius:50%;background:var(--lime);display:grid;place-items:center;margin:0 auto 12px}
+.video small{font:400 12px/1.4 var(--mono);opacity:.7}
+.downloads{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+.inline-sub{background:var(--bg-2);border-radius:20px;padding:28px;margin:40px 0}
+.inline-sub h3{font:400 34px/1 var(--display);text-transform:uppercase;margin-bottom:8px}
+.inline-sub form{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.inline-sub input{flex:1 1 220px;min-width:0;font:400 16px var(--body);padding:14px 16px;border-radius:12px;border:2px solid var(--fg);background:var(--bg);color:var(--fg)}
+
+footer{border-top:2px solid var(--fg);padding-block:40px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:end}
+footer .big{font:400 clamp(48px,10vw,120px)/.85 var(--display);text-transform:uppercase;color:var(--green)}
+footer .big i{font:italic 400 .5em var(--accent);color:var(--fg);text-transform:none}
+footer small{font:400 12px/1.6 var(--mono);color:var(--muted)}
+/* ===== Estilo GrowLocal: Jakarta 800 en minúsculas, etiquetas mono entre corchetes ===== */
+.hero h1,.sec-head h2,.workshop h2,.subscribe h2,.guide h1,.path h3,.card h3,.article h2,.inline-sub h3,footer .big,.marquee span,.day b{font-family:var(--display);font-weight:800;text-transform:none;letter-spacing:-.035em}
+.hero h1{font-size:clamp(56px,11vw,148px);line-height:.92}
+.sec-head h2,.workshop h2,.subscribe h2{font-size:clamp(38px,5.5vw,68px);line-height:1}
+.guide h1{font-size:clamp(40px,6.5vw,84px);line-height:.98}
+.path h3{font-size:26px;line-height:1.1}
+.card h3{font-size:22px;line-height:1.15}
+.article h2{font-size:30px;line-height:1.1}
+.inline-sub h3{font-size:26px}
+footer .big{font-size:clamp(44px,8vw,96px)}
+.marquee span{font-size:22px;letter-spacing:-.01em}
+.day b{font-size:26px}
+.logo{font-family:var(--display);font-weight:800;text-transform:none;letter-spacing:-.03em;font-size:22px}
+.hero h1 em,.sec-head h2 em,.workshop h2 em,.subscribe h2 em,.guide h1 em,footer .big i,.logo i,.intro .lead{font-family:var(--display);font-style:normal}
+.hero h1 em,.sec-head h2 em,.workshop h2 em,.subscribe h2 em,footer .big i,.logo i{font-size:1em;font-weight:800;letter-spacing:-.035em}
+.logo i{color:var(--green);font-size:1em}
+.logo{color:var(--fg)}
+.guide h1 em{font-weight:500;letter-spacing:-.01em;color:var(--muted)}
+.intro .lead{font-weight:700;letter-spacing:-.02em;font-size:clamp(24px,3vw,32px);line-height:1.2}
+.eyebrow::before,.path .kind::before{content:"[ "}.eyebrow::after,.path .kind::after{content:" ]"}
+.hero-card{background:var(--code-bg);color:var(--code-fg);border-radius:24px;background-image:radial-gradient(color-mix(in srgb,var(--lime) 22%,transparent) 1px,transparent 1.5px);background-size:22px 22px}
+.btn{border-radius:12px}
+.chip{border-radius:10px}
+.tag{border-radius:10px;font-family:var(--mono);font-weight:500;box-shadow:none;border:1.5px solid var(--fg)}
+.photo{border-radius:20px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);font:500 14px var(--body);padding:12px 20px;border-radius:999px;z-index:20}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" data-go="home">IA<i>con</i>Chuy</a>
+    <nav class="main">
+      <a class="hide-sm" data-go="contenido">Guías</a>
+      <a class="hide-sm" data-go="contenido" data-filter="video">Videos</a>
+      <a class="hide-sm" data-go="contenido" data-filter="prompt">Prompts</a>
+      <a class="btn" data-go="suscribete" style="padding:11px 18px;font-size:12px">Suscríbete</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+  <section class="hero wrap">
+    <h1>Hola, <em>soy</em> Chuy</h1>
+    <div class="hero-grid">
+      <div class="photo">
+        <span>Aquí va tu foto<br>(vertical 4:5, fondo con personalidad)</span>
+        <div class="tag t1">En vivo · 102.3 FM</div>
+        <div class="tag t2">Dueño de GrowLocal</div>
+        <div class="tag t3">Fitness & wellness</div>
+      </div>
+      <div class="intro">
+        <p class="lead">La IA explicada en español, para negocios reales.</p>
+        <p>Dirijo una agencia de marketing, ayudo a operar estudios de fitness y wellness entre Laredo y la Ciudad de México, y todas las tardes estoy en la radio. La IA es lo que me permite con todo.</p>
+        <p>No soy programador. Aquí comparto lo que sí me funciona: las guías, los videos y los prompts exactos que uso, listos para copiar y pegar.</p>
+        <div class="ctas">
+          <a class="btn" data-go="contenido">Ver el contenido</a>
+          <a class="btn ghost" data-go="suscribete">Recibirlo por correo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="track">
+    <span>La IA es ahora <b>·</b> Aprende en español <b>·</b> Sin código <b>·</b> Para tu negocio <b>·</b></span>
+    <span>La IA es ahora <b>·</b> Aprende en español <b>·</b> Sin código <b>·</b> Para tu negocio <b>·</b></span>
+    <span>La IA es ahora <b>·</b> Aprende en español <b>·</b> Sin código <b>·</b> Para tu negocio <b>·</b></span>
+    <span>La IA es ahora <b>·</b> Aprende en español <b>·</b> Sin código <b>·</b> Para tu negocio <b>·</b></span>
+  </div></div>
+
+  <section class="block workshop">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" style="color:var(--lime)">Workshop en línea · 3 días</p>
+        <h2>IA para tu <em>negocio</em>, en un fin de semana</h2>
+        <p>Tres sesiones en vivo para dejar la IA trabajando en tu negocio: contenido, ventas y seguimiento a clientes. Sin código.</p>
+        <a class="btn" data-go="suscribete">Entrar a la lista de espera →</a>
+      </div>
+      <div class="days">
+        <div class="day"><b>D1</b><p><small>Base</small>Configura tu asistente de IA con el contexto de tu negocio.</p></div>
+        <div class="day"><b>D2</b><p><small>Contenido</small>Una semana de posts, guiones y correos desde un solo brief.</p></div>
+        <div class="day"><b>D3</b><p><small>Ventas</small>Seguimiento a leads y reactivación de clientes en automático.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <div class="sec-head">
+      <h2>Por dónde <em>empezar</em></h2>
+      <p>Tres formas de aprender conmigo, según cuánto tiempo tengas hoy.</p>
+    </div>
+    <div class="paths">
+      <div class="path"><span class="kind">Leer · 5 min</span><h3>Guías gratis</h3><p>Paso a paso en español, con capturas y el resultado final. Para usar el mismo día.</p><a data-go="contenido" data-filter="articulo">Ver guías →</a></div>
+      <div class="path"><span class="kind">Ver · 10 min</span><h3>Videos</h3><p>Los tutoriales de mis redes, ordenados por tema y con el prompt de cada video debajo.</p><a data-go="contenido" data-filter="video">Ver videos →</a></div>
+      <div class="path"><span class="kind">Copiar · 1 min</span><h3>Prompts</h3><p>La biblioteca de prompts que uso en la agencia, la radio y los estudios. Copia, pega y adapta.</p><a data-go="contenido" data-filter="prompt">Ver prompts →</a></div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="contenido" style="padding-top:0">
+    <div class="sec-head">
+      <h2>Lo más <em>reciente</em></h2>
+      <div class="filters" role="group" aria-label="Filtrar contenido">
+        <button class="chip" data-f="todo" aria-pressed="true">Todo</button>
+        <button class="chip" data-f="articulo" aria-pressed="false">Guías</button>
+        <button class="chip" data-f="video" aria-pressed="false">Videos</button>
+        <button class="chip" data-f="prompt" aria-pressed="false">Prompts</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="sample-note">* La primera es tu guía real; las demás son títulos de ejemplo. Abre cualquiera para ver la plantilla de una guía.</p>
+  </section>
+
+  <section class="block wrap" style="padding-top:0">
+    <div class="sec-head">
+      <h2>Prompt de la <em>semana</em></h2>
+      <p>Así se ve cada prompt en el sitio: un bloque oscuro con botón para copiar.</p>
+    </div>
+    <div class="prompt-box">
+      <div class="bar"><span>Prompt · Onboarding</span><button class="copy" data-copy="p0">Copiar</button></div>
+      <pre id="p0">Actúa como mi nuevo asistente de negocio. Antes de ayudarme con cualquier cosa, entrevístame como si fuera tu primer día de trabajo.
+
+Hazme una pregunta a la vez sobre:
+1. Qué vende mi negocio y a quién
+2. Cómo consigo clientes hoy
+3. Qué tareas me quitan más tiempo cada semana
+4. Mi tono de voz al escribirle a clientes
+
+Cuando termines, resume todo en un perfil de mi negocio que pueda pegar al inicio de cualquier conversación.</pre>
+    </div>
+  </section>
+
+  <section class="block subscribe" id="suscribete">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" style="color:var(--lime)">Newsletter · cada semana</p>
+        <h2>La IA de la semana, <em>en tu correo</em></h2>
+        <p>Cada semana te mando la guía nueva, el video y el prompt para copiar. Y eres el primero en enterarte cuando abro el workshop.</p>
+      </div>
+      <form class="sub" id="subForm" novalidate>
+        <label for="sub-name">Nombre</label>
+        <input id="sub-name" name="name" placeholder="Tu nombre" autocomplete="given-name">
+        <label for="sub-email">Correo</label>
+        <input id="sub-email" name="email" type="email" placeholder="tu@correo.com" autocomplete="email">
+        <button type="submit">Quiero recibirlo</button>
+        <div class="form-msg" id="subMsg" role="status"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<main id="guide" hidden>
+  <article class="guide wrap">
+    <a class="back" data-go="contenido">← Todo el contenido</a>
+    <h1 id="g-title">Configura Claude como tu asistente <em id="g-sub">Con un prompt para cada paso</em></h1>
+    <div class="byline"><span>Por Chuy Cortez</span><span>·</span><span id="g-time">6 min de lectura</span><span>·</span><span>Guía + video + 3 prompts</span></div>
+    <div class="article">
+      <div class="video"><div><div class="play"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#062A25"/></svg></div>Video del tutorial<br><small>En el sitio real se incrusta aquí tu video de YouTube o TikTok</small></div></div>
+      <p>Esta es la plantilla de cada guía: arriba el video para quien prefiere verlo, abajo el paso a paso para quien prefiere leerlo, y cada prompt en su propio bloque con botón de copiar.</p>
+      <h2>1. Dale contexto</h2>
+      <p>La IA responde mejor cuando sabe quién eres y qué vendes. Empieza con este prompt y guarda el resultado.</p>
+      <div class="prompt-box">
+        <div class="bar"><span>Prompt 1 · Contexto</span><button class="copy" data-copy="p1">Copiar</button></div>
+        <pre id="p1">Este es el perfil de mi negocio: [pega aquí tu perfil]. Úsalo como contexto en todo lo que te pida. Si algo no está claro, pregúntame antes de responder.</pre>
+      </div>
+      <div class="inline-sub">
+        <h3>¿Te está sirviendo?</h3>
+        <p style="margin:0">Recibe la próxima guía en tu correo, con los prompts listos para copiar.</p>
+        <form id="inlineForm" novalidate>
+          <input id="inline-email" type="email" placeholder="tu@correo.com" aria-label="Correo" autocomplete="email">
+          <button class="btn" type="submit">Suscribirme</button>
+        </form>
+        <div class="form-msg" id="inlineMsg" role="status" style="margin-top:8px"></div>
+      </div>
+      <h2>2. Pídele el primer entregable</h2>
+      <p>Con el contexto cargado, pídele algo concreto: una semana de contenido, un correo de seguimiento o un guion para un video.</p>
+      <div class="prompt-box">
+        <div class="bar"><span>Prompt 2 · Contenido</span><button class="copy" data-copy="p2">Copiar</button></div>
+        <pre id="p2">Con base en el perfil de mi negocio, crea 5 ideas de posts para esta semana. Para cada una dame: gancho de la primera línea, texto del post y llamado a la acción.</pre>
+      </div>
+      <div class="downloads">
+        <button class="btn ghost" data-toast="En el sitio real, esto descarga los prompts en .md">↓ Descargar todos los prompts</button>
+        <button class="btn ghost" data-toast="En el sitio real, esto descarga la guía en PDF">↓ Guía en PDF</button>
+      </div>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="big">IA <i>con</i> Chuy</div>
+    <small>Instagram · TikTok · YouTube<br>© 2026 Chuy Cortez · Workflows reales, en español.</small>
+  </div>
+</footer>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const items=[
+  {t:"articulo",h:"38 formas de encontrar una idea de negocio de $1M",s:"Las 10 que yo sí correría, cada una con su prompt",d:"Vas a donde la gente ya se queja en voz alta y dejas que la IA haga la lectura.",m:"12 min"},
+  {t:"articulo",h:"Configura Claude como tu asistente",s:"Con un prompt para cada paso",d:"El primer paso para que la IA conozca tu negocio y te responda como alguien de tu equipo.",m:"6 min"},
+  {t:"video",h:"Una semana de contenido en 20 minutos",s:"Del brief al calendario",d:"Cómo saco los posts de la semana para un estudio de fitness desde un solo brief.",m:"9 min"},
+  {t:"prompt",h:"Reactivar clientes que ya no vienen",s:"Prompt de seguimiento",d:"El mensaje que uso para escribirle a miembros inactivos sin sonar desesperado.",m:"1 min"},
+  {t:"articulo",h:"Guiones de radio con IA",s:"Mi proceso diario en cabina",d:"Cómo preparo los segmentos de cada tarde con un asistente que ya conoce el show.",m:"7 min"},
+  {t:"video",h:"Automatiza tus leads con IA",s:"Seguimiento sin código",d:"Responde a cada prospecto en minutos, aunque estés en junta o al aire.",m:"12 min"},
+  {t:"prompt",h:"Propuesta comercial en 5 minutos",s:"Prompt para agencias",d:"La estructura que uso en GrowLocal para armar propuestas a clientes nuevos.",m:"1 min"}
+];
+const label={articulo:"Guía",video:"Video",prompt:"Prompt"};
+const grid=document.getElementById('grid');
+function render(f){
+  grid.innerHTML=items.filter(i=>f==="todo"||i.t===f).map((i,n)=>`
+    <div class="card" tabindex="0" role="link" data-i="${items.indexOf(i)}">
+      <div class="meta"><span class="pill ${i.t}">${label[i.t]}</span><span class="time">${i.m}</span></div>
+      <h3>${i.h}</h3><p>${i.d}</p>
+      <span class="go">${i.t==="video"?"Ver video":i.t==="prompt"?"Copiar prompt":"Leer guía"} →</span>
+    </div>`).join('');
+}
+function setFilter(f){
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.f===f));
+  render(f);
+}
+setFilter('todo');
+document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>setFilter(c.dataset.f)));
+
+const home=document.getElementById('home'),guide=document.getElementById('guide');
+function openGuide(i){
+  const it=items[i];
+  document.getElementById('g-title').innerHTML=`${it.h} <em>${it.s}</em>`;
+  document.getElementById('g-time').textContent=it.m+(it.t==="video"?" de video":" de lectura");
+  home.hidden=true;guide.hidden=false;window.scrollTo(0,0);
+}
+grid.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openGuide(+c.dataset.i)});
+grid.addEventListener('keydown',e=>{const c=e.target.closest('.card');if(c&&e.key==='Enter')openGuide(+c.dataset.i)});
+
+document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  const go=a.dataset.go;
+  guide.hidden=true;home.hidden=false;
+  if(a.dataset.filter)setFilter(a.dataset.filter);
+  if(go==="home"){window.scrollTo(0,0);return}
+  const el=document.getElementById(go);
+  if(el)el.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}));
+
+const toast=document.getElementById('toast');let tt;
+function say(m){toast.textContent=m;toast.hidden=false;clearTimeout(tt);tt=setTimeout(()=>toast.hidden=true,2400)}
+document.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>say(b.dataset.toast)));
+
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',()=>{
+  const pre=document.getElementById(b.dataset.copy);const txt=pre.innerText;
+  const done=()=>{b.textContent='¡Copiado!';setTimeout(()=>b.textContent='Copiar',1800)};
+  try{navigator.clipboard.writeText(txt).then(done).catch(()=>sel(pre))}catch(_){sel(pre)}
+}));
+function sel(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);say('Texto seleccionado: usa Ctrl+C / Cmd+C')}
+
+function handle(form,emailId,msgId){
+  document.getElementById(form).addEventListener('submit',e=>{
+    e.preventDefault();
+    const v=document.getElementById(emailId).value.trim();const m=document.getElementById(msgId);
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){m.textContent='Escribe un correo válido, por ejemplo tu@correo.com';return}
+    m.textContent='Listo. Prototipo: en el sitio real esto se conecta a tu lista de correo.';
+  });
+}
+handle('subForm','sub-email','subMsg');handle('inlineForm','inline-email','inlineMsg');
+</script>
+</body>
+</html>
