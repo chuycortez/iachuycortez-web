@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:image" content="https://iaconchuycortez.com/chuy.jpg">
 <meta name="description" content="La IA explicada en español, para negocios reales. Guías, videos y prompts para copiar y pegar.">
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 <title>IA con Chuy Cortez</title>
@@ -192,6 +193,8 @@ footer .big{font-size:clamp(44px,8vw,96px)}
 .chip{border-radius:10px}
 .tag{border-radius:10px;font-family:var(--mono);font-weight:500;box-shadow:none;border:1.5px solid var(--fg)}
 .photo{border-radius:20px}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;border-radius:inherit}
+.photo{overflow:visible;border:0;padding:0}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);font:500 14px var(--body);padding:12px 20px;border-radius:999px;z-index:20}
 </style>
 </head>
@@ -214,7 +217,7 @@ footer .big{font-size:clamp(44px,8vw,96px)}
     <h1>Hola, <em>soy</em> Chuy</h1>
     <div class="hero-grid">
       <div class="photo">
-        <span>Aquí va tu foto<br>(vertical 4:5, fondo con personalidad)</span>
+        <img src="chuy.jpg" alt="Chuy Cortez" width="1000" height="1333" fetchpriority="high">
         <div class="tag t1">En vivo · 102.3 FM</div>
         <div class="tag t2">Dueño de GrowLocal</div>
         <div class="tag t3">Fitness & wellness</div>
