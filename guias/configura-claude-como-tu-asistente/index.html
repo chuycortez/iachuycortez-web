@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Configura Claude como tu asistente | IA con Chuy Cortez</title>
+<meta name="description" content="Paso a paso para configurar Claude como el asistente de tu negocio: un Proyecto con tu perfil, instrucciones listas para copiar y 3 pruebas para confirmar que funciona.">
+<link rel="canonical" href="https://iachuycortez.com/guias/configura-claude-como-tu-asistente/">
+<meta property="og:title" content="Configura Claude como tu asistente">
+<meta property="og:description" content="Paso a paso para configurar Claude como el asistente de tu negocio: un Proyecto con tu perfil, instrucciones listas para copiar y 3 pruebas para confirmar que funciona.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F4F7F5;--cream2:#EEF3F0;--paper:#FFFFFF;--green:#062A25;--green2:#0B7A63;--ink:#062A25;--muted:#46574F;--line:#B6CCC7;--mark:#6FE2AE;--bad:#F6E4DA;--badl:#E0BBA3;--good:#DDF2E8;--goodl:#9FD4BC;--onmark:#062A25}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--cream:#04201C;--cream2:#0A2E28;--paper:#0A2E28;--green:#6FE2AE;--green2:#2FA383;--ink:#EEF3F0;--muted:#A6BCB7;--line:#1B4038;--bad:#3A2A22;--badl:#6B4A38;--good:#0F3A30;--goodl:#1F6B57}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font:18px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3,.serif{font-family:"Plus Jakarta Sans",Georgia,"Times New Roman",serif;font-weight:800;line-height:1.1;letter-spacing:-.035em}
+a{color:var(--green);text-underline-offset:3px}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px}
+.top a{text-decoration:none;font-weight:600}
+.brand{font-family:"Plus Jakarta Sans",Georgia,serif;font-weight:700;font-size:17px}
+.brand b{color:var(--green2)}
+.hero{padding:44px 0 28px}
+.tag{display:inline-block;background:#0B7A63;color:#F4F7F5;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:99px}
+h1{font-size:clamp(32px,8vw,52px);margin:18px 0 14px;color:var(--green)}
+.deck{font-size:20px;color:var(--ink);margin:0 0 6px;max-width:34em}
+.stat{display:flex;gap:18px;align-items:center;margin:28px 0 0;padding:20px;background:#062A25;color:#F4F7F5;border-radius:16px}
+.stat .n{white-space:nowrap;color:#6FE2AE;font-family:"Plus Jakarta Sans",Georgia,serif;font-weight:700;font-size:clamp(48px,14vw,76px);line-height:1;color:var(--mark)}
+.stat p{margin:0;font-size:16px;line-height:1.45}
+.stat small{display:block;opacity:.8;margin-top:6px;font-size:13px}
+.quick{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:26px 0}
+.quick h2{font-size:18px;margin:0 0 8px;font-family:"Plus Jakarta Sans",system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--green2)}
+.quick ul{margin:0;padding-left:20px}
+.quick li{margin:4px 0}
+section{padding:26px 0}
+.step{display:grid;grid-template-columns:52px 1fr;gap:14px;border-top:2px solid var(--green);padding-top:22px}
+.num{font-family:"Plus Jakarta Sans",Georgia,serif;font-weight:700;font-size:44px;line-height:1;color:var(--green2)}
+h2{font-size:clamp(24px,6vw,32px);margin:0 0 10px;color:var(--green)}
+h3{font-size:20px;margin:22px 0 6px}
+p{margin:0 0 14px}
+.prompt{position:relative;background:#062A25;color:#EEF3F0;border:1.5px solid #062A25;border-radius:14px;margin:16px 0 20px;overflow:hidden}
+.prompt .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 8px 8px 16px;background:#021613;border-bottom:1px solid #1B4038;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6FE2AE}
+.prompt pre{margin:0;padding:16px;white-space:pre-wrap;word-wrap:break-word;color:#EEF3F0;font:14px/1.65 "JetBrains Mono",ui-monospace,Menlo,monospace;color:#EEF3F0}
+button.copy{appearance:none;border:0;background:#6FE2AE;color:#062A25;border-radius:999px;font:600 15px/1 "Plus Jakarta Sans",system-ui,sans-serif;padding:12px 18px;min-height:44px;border-radius:10px;cursor:pointer;transition:background .15s}
+button.copy:hover{filter:brightness(.92)}
+button.copy.ok{background:#F4F7F5}
+:focus-visible{outline:3px solid var(--mark);outline-offset:3px}
+.mirror{display:grid;gap:12px;margin:18px 0}
+@media(min-width:640px){.mirror{grid-template-columns:1fr 1fr}}
+.mirror div{padding:16px 18px;border-radius:14px;font-size:17px}
+.mirror .bad{background:var(--bad);border:1px solid var(--badl)}
+.mirror .good{background:var(--good);border:1px solid var(--goodl)}
+.mirror b{display:block;font-size:12px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px;color:var(--muted)}
+.word{background:var(--mark);border-radius:16px;padding:22px;margin:10px 0}
+.word .k{font-size:13px;letter-spacing:.07em;text-transform:uppercase;font-weight:700}
+.word{color:#062A25}.word .w{color:#062A25;font-family:"Plus Jakarta Sans",Georgia,serif;font-weight:700;font-size:clamp(30px,8vw,44px);line-height:1.1;margin:6px 0 2px;color:#062A25}
+.word .s{font-style:italic;margin:0 0 10px}
+.reto{border:2px dashed var(--green);border-radius:16px;padding:22px;background:var(--paper)}
+.reto h2{margin-bottom:8px}
+.note{font-size:16px;color:var(--muted);border-left:4px solid var(--line);padding-left:14px}
+.note p{margin:0 0 8px}
+.sources{font-size:15px;color:var(--muted)}
+.sources li{margin:4px 0}
+.meta{display:grid;gap:12px;margin:18px 0}
+.meta .row{display:grid;grid-template-columns:56px 1fr;gap:14px;align-items:start;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.meta .L{width:56px;height:56px;border-radius:50%;background:#062A25;color:#6FE2AE;display:grid;place-items:center;font-family:"Plus Jakarta Sans",Georgia,serif;font-weight:700;font-size:30px}
+.meta .row p{margin:0}
+.meta .row small{display:block;color:var(--green2);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
+.ba{display:grid;gap:12px;margin:18px 0}
+.ba .before{background:var(--bad);border:1px solid var(--badl);border-radius:14px;padding:16px 18px}
+.ba .after{background:var(--good);border:1px solid var(--goodl);border-radius:14px;padding:16px 18px}
+.ba b{display:block;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ba ul{margin:0;padding-left:0;list-style:none}
+.ba li{margin:6px 0}
+.ba li strong{color:var(--green)}
+.sub{background:#0B7A63;color:#F4F7F5;border-radius:20px;padding:28px 22px;margin:20px 0}
+.sub h2{color:#F4F7F5}
+.sub p{color:#F4F7F5}
+.sub form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+@media(min-width:560px){.sub form{flex-direction:row}}
+.sub input[type=email]{flex:1;min-height:48px;border-radius:10px;border:0;padding:0 14px;font:inherit;background:#F4F7F5;color:#062A25}
+.sub button{min-height:48px;border:0;border-radius:999px;background:#6FE2AE;color:#062A25;font:700 16px "Plus Jakarta Sans",system-ui,sans-serif;padding:0 22px;cursor:pointer}
+.sub small{display:block;margin-top:10px;opacity:.85;font-size:14px}
+.cta{text-align:center;padding:10px 0 4px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:24px 0 48px;font-size:15px;color:var(--muted)}
+.nav2{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:6px 0 0}
+.steps{margin:6px 0 16px;padding-left:22px}
+.steps li{margin:6px 0}
+details.ex{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin:14px 0;padding:0 16px}
+details.ex summary{cursor:pointer;font-weight:700;color:var(--green);padding:14px 0;min-height:44px}
+details.ex[open]{padding-bottom:6px}
+.sample{font-size:16px;padding-bottom:10px}
+.sample p{margin:0 0 10px}
+.checks{display:grid;gap:10px;margin:14px 0 18px}
+@media(min-width:640px){.checks{grid-template-columns:1fr 1fr}}
+.checks div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:16px}
+.checks b{display:block;color:var(--green);margin-bottom:2px}
+.ticks{list-style:none;padding:0;margin:8px 0 18px}
+.ticks li{position:relative;padding-left:30px;margin:8px 0}
+.ticks li::before{content:"✓";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--mark);color:#062A25;font-weight:800;font-size:13px;display:grid;place-items:center;margin-top:3px}
+.fix{background:var(--bad);border:1px solid var(--badl);border-radius:14px;padding:16px 18px;font-size:16px}
+.fix b{display:block;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.fix p{margin:0 0 8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media print{button.copy,.sub{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><a class="brand" href="/">IA con <b>Chuy Cortez</b></a><a href="/#contenido">Todo el contenido</a></header>
+
+<main>
+<div class="hero">
+<span class="tag">Guía · Paso a paso · 20 minutos</span>
+<h1>Configura Claude como tu asistente</h1>
+<p class="deck">Que la IA conozca tu negocio como alguien de tu equipo: tus precios, tus clientes y tu forma de hablar. Lo configuras una vez y te sirve todos los días.</p>
+</div>
+
+<div class="quick"><h2>Lo que vas a tener al final</h2>
+<ul>
+<li>Un <strong>Proyecto en Claude</strong> con el perfil completo de tu negocio, que se aplica solo a cada chat que abras ahí.</li>
+<li>Respuestas con <strong>tus precios reales</strong> y en <strong>tu tono</strong>, sin tener que explicarle tu negocio cada vez.</li>
+<li>Un asistente que <strong>pregunta antes de inventar</strong> y te dice cuando algo no le cuadra.</li>
+</ul>
+<p style="margin:10px 0 0;font-size:16px"><strong>Necesitas:</strong> una cuenta en <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> (funciona en computadora y en la app) y 20 minutos sin interrupciones. Tú solo pones los datos de tu negocio; todo lo demás está listo para copiar.</p>
+</div>
+
+<section class="step"><div class="num" aria-hidden="true">1</div><div>
+<h2>Arma el perfil de tu negocio</h2>
+<p>Este es el paso que hace la diferencia. Abre un chat normal en Claude, pega este prompt y contesta. La IA te entrevista una pregunta a la vez y al final te entrega tu perfil completo, ordenado y listo para copiar.</p>
+<div class="prompt"><div class="bar"><span>Prompt 1 · Entrevista de perfil</span><button class="copy" type="button" data-target="p1" aria-label="Copiar: Prompt 1 · Entrevista de perfil">Copiar</button></div><pre id="p1">Vas a ayudarme a armar el perfil de mi negocio. Lo voy a usar como contexto permanente para un asistente de IA, así que tiene que ser concreto y real.
+
+Entrevístame con estas reglas:
+- Hazme UNA pregunta a la vez y espera mi respuesta.
+- Si contesto algo vago ("de todo", "buen servicio", "a todo público"), pídeme un ejemplo concreto o un número.
+- Si no sé algo, márcalo como [PENDIENTE] y sigue.
+- No me des consejos todavía. Solo pregunta.
+
+Cubre estos temas, en este orden:
+1. El negocio: nombre, giro, ciudad y zona, cuánto tiempo lleva abierto, horario.
+2. Lo que vendo: productos o servicios principales con su precio, cuál vende más y cuál me deja más ganancia.
+3. Mi cliente ideal: quién es, qué problema le resuelvo y por qué me elige a mí.
+4. Competencia: 2 o 3 competidores y en qué me diferencio de ellos.
+5. Cómo llegan los clientes hoy y por dónde me escriben (WhatsApp, Instagram, teléfono, en persona).
+6. Las preguntas y objeciones que más me hacen, y cómo las contesto hoy.
+7. Mi tono con clientes: tú o usted, formal o casual, emojis sí o no, palabras que siempre uso y palabras que nunca usaría. Pídeme que pegue 2 o 3 mensajes reales que les haya mandado.
+8. Mis políticas: formas de pago, apartados, cancelaciones, garantías, entregas.
+9. Mi meta principal para los próximos 90 días.
+10. Las tareas que más tiempo me quitan cada semana.
+
+Cuando terminemos, entrégame el perfil completo en un solo bloque, en primera persona, con exactamente estos títulos:
+
+## MI NEGOCIO
+## LO QUE VENDO
+## MI CLIENTE IDEAL
+## POR QUÉ ME ELIGEN
+## CÓMO ME CONTACTAN
+## PREGUNTAS FRECUENTES Y CÓMO RESPONDO
+## MI TONO
+## POLÍTICAS
+## MI META (PRÓXIMOS 90 DÍAS)
+## LO QUE QUIERO DELEGAR
+
+Usa solo lo que yo te dije. Lo que no te haya dicho va como [PENDIENTE]. No inventes nada.
+
+Empieza con la primera pregunta.</pre></div>
+<p><strong>Consejo:</strong> contesta como si le hablaras a alguien nuevo en tu equipo. Mientras más reales sean tus respuestas (precios exactos, frases que de verdad usas), mejor va a trabajar tu asistente. Si te da flojera escribir, usa el micrófono y díctale.</p>
+<details class="ex"><summary>¿Prefieres llenarlo tú? Usa esta plantilla</summary>
+<div class="prompt"><div class="bar"><span>Plantilla · Perfil de mi negocio</span><button class="copy" type="button" data-target="p2" aria-label="Copiar: Plantilla · Perfil de mi negocio">Copiar</button></div><pre id="p2">## MI NEGOCIO
+Nombre: [nombre]
+Giro: [qué es, en una frase]
+Ubicación: [ciudad y zona]
+Abierto desde: [año]
+Horario: [días y horas]
+
+## LO QUE VENDO
+- [producto o servicio 1]: $[precio] · [qué incluye]
+- [producto o servicio 2]: $[precio] · [qué incluye]
+- [producto o servicio 3]: $[precio] · [qué incluye]
+El que más vende: [cuál]
+El que más ganancia me deja: [cuál]
+
+## MI CLIENTE IDEAL
+[Quién es: edad, ocupación, zona, qué le preocupa y qué problema le resuelvo]
+
+## POR QUÉ ME ELIGEN
+[2 o 3 razones reales. Competidores principales: [nombres] y en qué soy diferente]
+
+## CÓMO ME CONTACTAN
+[WhatsApp / Instagram / teléfono / en persona. Cuál es el principal]
+
+## PREGUNTAS FRECUENTES Y CÓMO RESPONDO
+- "[pregunta]" → [cómo la contesto]
+- "[pregunta]" → [cómo la contesto]
+- "[objeción, por ejemplo: está caro]" → [cómo la contesto]
+
+## MI TONO
+Trato: [de tú / de usted]
+Estilo: [casual, cercano, profesional...]
+Emojis: [sí, pocos / no]
+Palabras que siempre uso: [ejemplos]
+Nunca diría: [ejemplos]
+Ejemplo de un mensaje real que mandé:
+"[pega aquí un mensaje tuyo]"
+
+## POLÍTICAS
+Pagos: [efectivo, tarjeta, transferencia]
+Apartados y cancelaciones: [cómo funciona]
+Garantías o devoluciones: [cómo funciona]
+
+## MI META (PRÓXIMOS 90 DÍAS)
+[Una meta con número. Ejemplo: 30 clientes nuevos]
+
+## LO QUE QUIERO DELEGAR
+[Tareas que te quitan tiempo: contestar mensajes, posts, cotizaciones...]</pre></div>
+</details>
+<details class="ex"><summary>Ver un ejemplo lleno (negocio ficticio)</summary>
+<div class="sample"><p><strong>## MI NEGOCIO</strong><br>Nombre: Núcleo Pilates · Giro: estudio de pilates reformer · Ubicación: San Pedro, Monterrey · Abierto desde 2023 · Lunes a sábado, 6:00 a 21:00.</p>
+<p><strong>## LO QUE VENDO</strong><br>Clase suelta $350 · Paquete 8 clases $2,200 (vigencia 30 días) · Ilimitado mensual $3,400. El que más vende: paquete 8. El que más ganancia deja: ilimitado.</p>
+<p><strong>## MI TONO</strong><br>De tú, cercano y con energía. Emojis pocos (💪✨). Siempre digo "te esperamos en el reformer". Nunca diría "estimada clienta" ni "promoción imperdible".</p>
+<p style="margin:0;color:var(--muted);font-size:15px">…y así con el resto de los títulos. Es un ejemplo inventado para que veas el nivel de detalle.</p></div>
+</details>
+</div></section>
+
+<section class="step"><div class="num" aria-hidden="true">2</div><div>
+<h2>Crea el Proyecto de tu negocio</h2>
+<p>Un Proyecto es un espacio dentro de Claude con sus propias instrucciones y archivos. Todo chat que abras ahí ya sabe quién eres. Está en todos los planes; en el gratuito puedes tener hasta cinco.</p>
+<ol class="steps">
+<li>En el menú de la izquierda, entra a <strong>Proyectos</strong> (Projects). También puedes ir directo a <a href="https://claude.ai/projects" target="_blank" rel="noopener">claude.ai/projects</a>.</li>
+<li>Da clic en <strong>+ Nuevo proyecto</strong> (+ New Project), arriba a la derecha.</li>
+<li>Ponle de nombre el de tu negocio, por ejemplo <em>“Asistente · Núcleo Pilates”</em>, y da clic en crear. La descripción es solo para ti; Claude no la lee.</li>
+</ol>
+</div></section>
+
+<section class="step"><div class="num" aria-hidden="true">3</div><div>
+<h2>Pega las instrucciones del asistente</h2>
+<p>Este es el cerebro de tu asistente. Le dice cómo trabajar contigo: usar tus datos reales, no inventar precios, preguntarte lo que le falte y escribir como tú.</p>
+<ol class="steps">
+<li>Dentro del Proyecto, da clic en <strong>Establecer instrucciones del proyecto</strong> (Set project instructions).</li>
+<li>Copia el bloque de abajo y pégalo.</li>
+<li>Hasta el final, donde dice <em>[Pega aquí…]</em>, pega el perfil que armaste en el paso 1.</li>
+<li>Da clic en <strong>Guardar instrucciones</strong> (Save instructions).</li>
+</ol>
+<div class="prompt"><div class="bar"><span>Prompt 2 · Instrucciones del Proyecto</span><button class="copy" type="button" data-target="p3" aria-label="Copiar: Prompt 2 · Instrucciones del Proyecto">Copiar</button></div><pre id="p3">Eres el asistente de mi negocio. Trabajas conmigo como alguien de mi equipo que ya conoce el negocio de memoria. El perfil completo está al final de estas instrucciones y en los archivos del proyecto. Úsalo en todo lo que hagas.
+
+CÓMO TRABAJAS
+1. Antes de responder, revisa el perfil. Usa mis precios, mis productos, mi ciudad y mis clientes reales, nunca ejemplos genéricos.
+2. Si te falta un dato que cambia la respuesta (un precio, una fecha, para quién es), pregúntamelo antes de hacer el trabajo. Máximo 3 preguntas, juntas en una lista. Si el dato no cambia mucho, asume lo más razonable y dime en una línea al final qué asumiste.
+3. Nunca inventes datos de mi negocio: precios, promociones, horarios, resultados, testimonios ni políticas. Si algo no está en el perfil, déjalo entre [corchetes] para que yo lo llene.
+4. Todo lo que escribas para mis clientes va en MI tono (ver "MI TONO" en el perfil): el mismo trato de tú o usted, las mismas palabras, los mismos emojis. Que suene a mí, no a una IA.
+5. Entrega listo para usar. Si te pido un mensaje, dame el mensaje; si te pido posts, dame los posts. Sin introducciones, sin explicarme lo que vas a hacer y sin repetir lo que te pedí.
+6. Si te pido tu opinión, sé directo: dime qué harías tú y por qué. Si algo de mi plan no te convence, dímelo con la razón. No me des la razón solo por dármela.
+7. Español de México, claro y sin tecnicismos. Si me das opciones, máximo 3, y marca cuál recomiendas.
+
+FORMATOS QUE USO SEGUIDO
+- Mensaje de WhatsApp: máximo 5 líneas, un solo llamado a la acción, y termina con una pregunta que invite a contestar.
+- Post para redes: gancho en la primera línea, texto y llamado a la acción. Sin hashtags a menos que te los pida.
+- Correo: asunto y cuerpo de máximo 150 palabras.
+- Plan de trabajo: pasos numerados, cada uno con quién lo hace y para cuándo.
+
+CUANDO TE DÉ INFORMACIÓN NUEVA
+Si te cuento algo que cambia el perfil (un precio nuevo, una promoción, un servicio nuevo), úsalo desde ese momento y al final de tu respuesta agrega una línea así:
+📌 Actualiza tu perfil: [el cambio, en una línea]
+
+=== PERFIL DE MI NEGOCIO ===
+[Pega aquí el perfil completo que armaste en el paso 1]</pre></div>
+<p class="note">¿No te aparece la opción de instrucciones? Da clic en el <strong>+</strong> del conocimiento del proyecto, elige agregar texto y pega ahí el mismo bloque completo. Funciona igual.</p>
+</div></section>
+
+<section class="step"><div class="num" aria-hidden="true">4</div><div>
+<h2>Súbele tus archivos</h2>
+<p>Del lado derecho del Proyecto está el <strong>conocimiento</strong> (Project knowledge). Da clic en <strong>+</strong> y sube lo que ya tienes. Claude lo consulta en cada chat del Proyecto.</p>
+<div class="checks">
+<div><b>Lista de precios o menú</b>El PDF o la foto que ya mandas a tus clientes.</div>
+<div><b>Tus preguntas frecuentes</b>Aunque sea una lista en notas del celular.</div>
+<div><b>5 a 10 mensajes tuyos reales</b>Capturas o texto de cómo le contestas a clientes. Es lo que más ayuda a que suene a ti.</div>
+<div><b>Reseñas reales</b>Copia tus mejores reseñas de Google. Así usa lo que tus clientes dicen de verdad.</div>
+</div>
+<p class="note">Antes de subir capturas, tapa o borra nombres y teléfonos de tus clientes. Tu asistente no los necesita.</p>
+</div></section>
+
+<section class="step"><div class="num" aria-hidden="true">5</div><div>
+<h2>Dile a Claude quién eres en todos tus chats</h2>
+<p>Las instrucciones del Proyecto solo aplican dentro del Proyecto. Esto es para todo lo demás: cualquier chat que abras, aunque sea de otra cosa.</p>
+<ol class="steps">
+<li>Da clic en tus iniciales, abajo a la izquierda, y entra a <strong>Configuración</strong> (Settings).</li>
+<li>Busca la sección de instrucciones para Claude (en la versión actual está en <em>Your Claude → Instructions</em>).</li>
+<li>Pega esto, llena tus datos y guarda.</li>
+</ol>
+<div class="prompt"><div class="bar"><span>Prompt 3 · Instrucciones de tu cuenta</span><button class="copy" type="button" data-target="p4" aria-label="Copiar: Prompt 3 · Instrucciones de tu cuenta">Copiar</button></div><pre id="p4">Me llamo [tu nombre]. Soy [dueño/a o gerente] de [nombre del negocio], un [giro] en [ciudad].
+Háblame en español de México, de tú, directo y sin rodeos.
+Dame respuestas cortas por default; si necesito más detalle, te lo pido.
+Si no estás seguro de algo, dímelo en lugar de inventarlo.
+Cuando te pida algo de mi negocio fuera de mi Proyecto, recuérdame que ahí tienes todo el contexto.</pre></div>
+</div></section>
+
+<section class="step"><div class="num" aria-hidden="true">6</div><div>
+<h2>Pruébalo con estas 3 pruebas</h2>
+<p>Abre un chat <strong>dentro del Proyecto</strong> y pega cada prueba. Así sabes si quedó bien configurado antes de usarlo en serio.</p>
+<div class="prompt"><div class="bar"><span>Prueba 1 · Mensaje de WhatsApp</span><button class="copy" type="button" data-target="p5" aria-label="Copiar: Prueba 1 · Mensaje de WhatsApp">Copiar</button></div><pre id="p5">Me acaba de escribir alguien por WhatsApp: "Hola, ¿cuánto cuesta?". No sé qué le interesa. Escríbeme la respuesta para mandársela.</pre></div>
+<div class="prompt"><div class="bar"><span>Prueba 2 · Contenido de la semana</span><button class="copy" type="button" data-target="p6" aria-label="Copiar: Prueba 2 · Contenido de la semana">Copiar</button></div><pre id="p6">Dame 5 posts para mis redes de esta semana, pensados para acercarme a mi meta de los próximos 90 días.</pre></div>
+<div class="prompt"><div class="bar"><span>Prueba 3 · Objeción de precio</span><button class="copy" type="button" data-target="p7" aria-label="Copiar: Prueba 3 · Objeción de precio">Copiar</button></div><pre id="p7">Un cliente me dice que está muy caro y que con mi competencia le sale más barato. ¿Cómo le contesto sin bajar mi precio?</pre></div>
+<h3>Así sabes que quedó bien</h3>
+<ul class="ticks">
+<li>Usó <strong>tus precios y servicios reales</strong>, no números inventados.</li>
+<li>El mensaje <strong>suena a ti</strong>: el mismo trato, las mismas palabras.</li>
+<li>Te <strong>preguntó</strong> lo que le faltaba, o te dijo qué asumió.</li>
+<li>No hay datos inventados: lo que no sabía lo dejó entre [corchetes].</li>
+</ul>
+<div class="fix"><b>Si algo falló, arréglalo así</b>
+<p><strong>No suena a ti:</strong> agrega 2 o 3 mensajes reales tuyos en “MI TONO” o súbelos al conocimiento.</p>
+<p><strong>Inventó un precio:</strong> revisa que esté en “LO QUE VENDO”. Si estaba, súbele también tu lista de precios.</p>
+<p style="margin:0"><strong>Respuestas muy genéricas:</strong> tu perfil tiene muchos [PENDIENTE]. Vuelve al paso 1 y complétalos.</p></div>
+</div></section>
+
+<section class="step"><div class="num" aria-hidden="true">7</div><div>
+<h2>Mantenlo al día</h2>
+<p>Tu negocio cambia y tu asistente tiene que cambiar con él. Cuando veas la línea <strong>📌 Actualiza tu perfil</strong> en una respuesta, copia ese cambio a las instrucciones del Proyecto. Y una vez al mes, abre un chat en el Proyecto y pega esto:</p>
+<div class="prompt"><div class="bar"><span>Prompt 4 · Revisión mensual</span><button class="copy" type="button" data-target="p8" aria-label="Copiar: Prompt 4 · Revisión mensual">Copiar</button></div><pre id="p8">Revisa el perfil de mi negocio que tienes en las instrucciones.
+
+1. Dime qué datos ves incompletos, vagos o marcados como [PENDIENTE].
+2. Hazme hasta 5 preguntas sobre lo que podría haber cambiado este mes: precios, servicios, promociones, clientes, meta.
+3. Con mis respuestas, entrégame el perfil completo actualizado, con los mismos títulos, listo para reemplazar el anterior.
+
+No inventes nada: usa solo lo que ya está en el perfil y lo que yo te conteste.</pre></div>
+<p>Copia el perfil nuevo, entra a las instrucciones del Proyecto, reemplaza la parte de abajo de <em>=== PERFIL DE MI NEGOCIO ===</em> y guarda.</p>
+</div></section>
+
+<section>
+<div class="reto"><h2>Tu reto de hoy</h2>
+<p>No lo dejes para después: haz los pasos 1, 2 y 3 hoy mismo. Son 20 minutos. Luego corre la prueba 1 y mándame captura de lo que te contestó tu asistente.</p></div>
+</section>
+
+<section class="sub" id="suscribirme">
+<h2>Recibe la guía de cada semana</h2>
+<p>Cada semana te mando una guía así: paso a paso, con los prompts listos para copiar. Gratis.</p>
+<form id="kitForm" novalidate>
+<label for="em" style="position:absolute;left:-9999px">Tu correo</label>
+<input id="em" type="email" name="email_address" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+<button type="submit">Quiero la guía</button>
+</form>
+<div id="kitMsg" role="status" style="margin-top:10px;font-size:15px"></div><small>Somos Los Actualizados: los que no se quedan atrás. Sin spam, te sales cuando quieras.</small>
+</section>
+
+<section class="note"><p><strong>Nota honesta:</strong> el asistente es tan bueno como el perfil que le das. Si el perfil está a medias, las respuestas van a salir a medias. Y siempre revisa antes de mandarle algo a un cliente: tú eres el que firma.</p>
+<p>¿Usas ChatGPT o Gemini? Los mismos bloques funcionan en los Proyectos de ChatGPT y en los Gems de Gemini: pega el Prompt 2 en las instrucciones y sube tus archivos.</p></section>
+
+<section><h2 style="font-size:18px">Fuentes</h2>
+<ul class="sources">
+<li><a href="https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects" target="_blank" rel="noopener">Centro de ayuda de Claude: cómo crear y administrar Proyectos</a> (instrucciones, conocimiento y límite de 5 proyectos en el plan gratuito).</li>
+<li><a href="https://support.claude.com/en/articles/10185728-understanding-claude-s-personalization-features" target="_blank" rel="noopener">Centro de ayuda de Claude: funciones de personalización</a> (instrucciones de cuenta e instrucciones de proyecto).</li>
+</ul>
+<div class="nav2"><a href="/guias/la-formula-meta-y-meta-prompting/">← La fórmula META y el meta-prompting</a><span></span></div>
+</section>
+</main>
+<footer>
+<p><strong>¿Quieres que te lo configure yo?</strong> Escríbeme a <a href="mailto:chuy@studiogrowhq.com">chuy@studiogrowhq.com</a> y pide tu asesoría gratuita.</p>
+<p>Una guía de <em>IA con Chuy Cortez</em>.</p>
+</footer>
+</div>
+<script>
+(function(){var f=document.getElementById("kitForm");if(!f)return;f.addEventListener("submit",async function(e){e.preventDefault();var v=document.getElementById("em").value.trim(),m=document.getElementById("kitMsg");if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){m.textContent="Escribe un correo válido, por ejemplo tu@correo.com";return}var b=f.querySelector("button");b.disabled=true;m.textContent="Enviando…";var d=new FormData();d.append("email_address",v);var ok=false;try{var r=await fetch("https://app.kit.com/forms/10073455/subscriptions",{method:"POST",body:d,headers:{Accept:"application/json"}});var j=await r.json().catch(function(){return{}});ok=r.ok&&j.status!=="failed"}catch(_){}b.disabled=false;if(ok){f.reset();m.textContent="¡Listo! Revisa tu correo (y Spam o Promociones) para confirmar tu suscripción."}else{m.textContent="No se pudo suscribir. Inténtalo de nuevo."}})})();
+
+document.querySelectorAll('button.copy').forEach(function(b){
+  b.addEventListener('click',function(){
+    var t=document.getElementById(b.dataset.target).textContent.trim();
+    function done(){var o=b.textContent;b.textContent='¡Copiado!';b.classList.add('ok');setTimeout(function(){b.textContent=o;b.classList.remove('ok')},1800)}
+    function fallback(){var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){b.textContent='Selecciónalo y cópialo'}document.body.removeChild(a)}
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done,fallback)}else{fallback()}
+  });
+});
+</script>
+</body>
+</html>
