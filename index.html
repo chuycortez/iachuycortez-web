@@ -111,6 +111,7 @@ section.block{padding-block:72px}
 .filters{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:500 13px/1 var(--body);padding:10px 16px;border-radius:999px;border:1.5px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.empty{grid-column:1/-1;color:var(--muted);margin:0}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
 .card{border-top:3px solid var(--fg);padding-top:16px;display:flex;flex-direction:column;gap:10px;min-width:0;cursor:pointer}
 .card:hover h3{color:var(--green)}
@@ -280,13 +281,12 @@ footer .big{font-size:clamp(44px,8vw,96px)}
       </div>
     </div>
     <div class="grid" id="grid"></div>
-    <p class="sample-note">* La primera es tu guía real; las demás son títulos de ejemplo. Abre cualquiera para ver la plantilla de una guía.</p>
   </section>
 
   <section class="block wrap" style="padding-top:0">
     <div class="sec-head">
       <h2>Prompt de la <em>semana</em></h2>
-      <p>Así se ve cada prompt en el sitio: un bloque oscuro con botón para copiar.</p>
+      <p>Pégalo al inicio de cualquier chat: la IA te entrevista y arma el perfil de tu negocio antes de ayudarte.</p>
     </div>
     <div class="prompt-box">
       <div class="bar"><span>Prompt · Onboarding</span><button class="copy" data-copy="p0">Copiar</button></div>
@@ -321,42 +321,6 @@ Cuando termines, resume todo en un perfil de mi negocio que pueda pegar al inici
   </section>
 </main>
 
-<main id="guide" hidden>
-  <article class="guide wrap">
-    <a class="back" data-go="contenido">← Todo el contenido</a>
-    <h1 id="g-title">Configura Claude como tu asistente <em id="g-sub">Con un prompt para cada paso</em></h1>
-    <div class="byline"><span>Por Chuy Cortez</span><span>·</span><span id="g-time">6 min de lectura</span><span>·</span><span>Guía + video + 3 prompts</span></div>
-    <div class="article">
-      <div class="video"><div><div class="play"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="#062A25"/></svg></div>Video del tutorial<br><small>En el sitio real se incrusta aquí tu video de YouTube o TikTok</small></div></div>
-      <p>Esta es la plantilla de cada guía: arriba el video para quien prefiere verlo, abajo el paso a paso para quien prefiere leerlo, y cada prompt en su propio bloque con botón de copiar.</p>
-      <h2>1. Dale contexto</h2>
-      <p>La IA responde mejor cuando sabe quién eres y qué vendes. Empieza con este prompt y guarda el resultado.</p>
-      <div class="prompt-box">
-        <div class="bar"><span>Prompt 1 · Contexto</span><button class="copy" data-copy="p1">Copiar</button></div>
-        <pre id="p1">Este es el perfil de mi negocio: [pega aquí tu perfil]. Úsalo como contexto en todo lo que te pida. Si algo no está claro, pregúntame antes de responder.</pre>
-      </div>
-      <div class="inline-sub">
-        <h3>¿Te está sirviendo?</h3>
-        <p style="margin:0">Recibe la próxima guía en tu correo, con los prompts listos para copiar.</p>
-        <form id="inlineForm" novalidate>
-          <input id="inline-email" type="email" placeholder="tu@correo.com" aria-label="Correo" autocomplete="email">
-          <button class="btn" type="submit">Suscribirme</button>
-        </form>
-        <div class="form-msg" id="inlineMsg" role="status" style="margin-top:8px"></div>
-      </div>
-      <h2>2. Pídele el primer entregable</h2>
-      <p>Con el contexto cargado, pídele algo concreto: una semana de contenido, un correo de seguimiento o un guion para un video.</p>
-      <div class="prompt-box">
-        <div class="bar"><span>Prompt 2 · Contenido</span><button class="copy" data-copy="p2">Copiar</button></div>
-        <pre id="p2">Con base en el perfil de mi negocio, crea 5 ideas de posts para esta semana. Para cada una dame: gancho de la primera línea, texto del post y llamado a la acción.</pre>
-      </div>
-      <div class="downloads">
-        <button class="btn ghost" data-toast="En el sitio real, esto descarga los prompts en .md">↓ Descargar todos los prompts</button>
-        <button class="btn ghost" data-toast="En el sitio real, esto descarga la guía en PDF">↓ Guía en PDF</button>
-      </div>
-    </div>
-  </article>
-</main>
 
 <footer>
   <div class="wrap">
@@ -370,14 +334,7 @@ Cuando termines, resume todo en un perfil de mi negocio que pueda pegar al inici
 <script>
 const items=[
   {t:"articulo",u:"/guias/la-formula-meta-y-meta-prompting/",h:"La fórmula META y el meta-prompting",s:"Cómo pedirle a la IA lo que necesitas",d:"Cuatro letras para que la IA deje de contestar con generalidades, y el prompt de prompts para que ella te entreviste.",m:"6 min"},
-  {t:"articulo",u:"/guias/tu-ia-te-dice-lo-que-quieres-oir/",h:"Tu IA te dice lo que quieres oír",s:"Cómo lograr que te diga la verdad",d:"Un estudio de Stanford midió 49% más de aprobación que una persona. 4 prompts para que deje de darte la razón.",m:"6 min"},
-  {t:"articulo",h:"38 formas de encontrar una idea de negocio de $1M",s:"Las 10 que yo sí correría, cada una con su prompt",d:"Vas a donde la gente ya se queja en voz alta y dejas que la IA haga la lectura.",m:"12 min"},
-  {t:"articulo",h:"Configura Claude como tu asistente",s:"Con un prompt para cada paso",d:"El primer paso para que la IA conozca tu negocio y te responda como alguien de tu equipo.",m:"6 min"},
-  {t:"video",h:"Una semana de contenido en 20 minutos",s:"Del brief al calendario",d:"Cómo saco los posts de la semana para un estudio de fitness desde un solo brief.",m:"9 min"},
-  {t:"prompt",h:"Reactivar clientes que ya no vienen",s:"Prompt de seguimiento",d:"El mensaje que uso para escribirle a miembros inactivos sin sonar desesperado.",m:"1 min"},
-  {t:"articulo",h:"Guiones de radio con IA",s:"Mi proceso diario en cabina",d:"Cómo preparo los segmentos de cada tarde con un asistente que ya conoce el show.",m:"7 min"},
-  {t:"video",h:"Automatiza tus leads con IA",s:"Seguimiento sin código",d:"Responde a cada prospecto en minutos, aunque estés en junta o al aire.",m:"12 min"},
-  {t:"prompt",h:"Propuesta comercial en 5 minutos",s:"Prompt para agencias",d:"La estructura que uso en GrowLocal para armar propuestas a clientes nuevos.",m:"1 min"}
+  {t:"articulo",u:"/guias/tu-ia-te-dice-lo-que-quieres-oir/",h:"Tu IA te dice lo que quieres oír",s:"Cómo lograr que te diga la verdad",d:"Un estudio de Stanford midió 49% más de aprobación que una persona. 4 prompts para que deje de darte la razón.",m:"6 min"}
 ];
 const label={articulo:"Guía",video:"Video",prompt:"Prompt"};
 const grid=document.getElementById('grid');
@@ -387,7 +344,7 @@ function render(f){
       <div class="meta"><span class="pill ${i.t}">${label[i.t]}</span><span class="time">${i.m}</span></div>
       <h3>${i.h}</h3><p>${i.d}</p>
       <span class="go">${i.t==="video"?"Ver video":i.t==="prompt"?"Copiar prompt":"Leer guía"} →</span>
-    </div>`).join('');
+    </div>`).join('')||'<p class="empty">Muy pronto. Suscríbete y te aviso cuando salga.</p>';
 }
 function setFilter(f){
   document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.f===f));
@@ -396,21 +353,14 @@ function setFilter(f){
 setFilter('todo');
 document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>setFilter(c.dataset.f)));
 
-const home=document.getElementById('home'),guide=document.getElementById('guide');
-function openGuide(i){
-  const it=items[i];
-  if(it.u){location.href=it.u;return}
-  document.getElementById('g-title').innerHTML=`${it.h} <em>${it.s}</em>`;
-  document.getElementById('g-time').textContent=it.m+(it.t==="video"?" de video":" de lectura");
-  home.hidden=true;guide.hidden=false;window.scrollTo(0,0);
-}
+const home=document.getElementById('home');
+function openGuide(i){location.href=items[i].u}
 grid.addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openGuide(+c.dataset.i)});
 grid.addEventListener('keydown',e=>{const c=e.target.closest('.card');if(c&&e.key==='Enter')openGuide(+c.dataset.i)});
 
 document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{
   e.preventDefault();
   const go=a.dataset.go;
-  guide.hidden=true;home.hidden=false;
   if(a.dataset.filter)setFilter(a.dataset.filter);
   if(go==="home"){window.scrollTo(0,0);return}
   const el=document.getElementById(go);
@@ -450,7 +400,7 @@ function handle(form,emailId,msgId,nameId){
     else{m.textContent='No se pudo suscribir'+(why?': '+why:'.')+' Inténtalo de nuevo.';console.warn('Kit:',why)}
   });
 }
-handle('subForm','sub-email','subMsg','sub-name');handle('inlineForm','inline-email','inlineMsg');
+handle('subForm','sub-email','subMsg','sub-name');
 </script>
 </body>
 </html>
