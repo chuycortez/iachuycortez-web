@@ -369,6 +369,8 @@ Cuando termines, resume todo en un perfil de mi negocio que pueda pegar al inici
 
 <script>
 const items=[
+  {t:"articulo",u:"/guias/la-formula-meta-y-meta-prompting/",h:"La fórmula META y el meta-prompting",s:"Cómo pedirle a la IA lo que necesitas",d:"Cuatro letras para que la IA deje de contestar con generalidades, y el prompt de prompts para que ella te entreviste.",m:"6 min"},
+  {t:"articulo",u:"/guias/tu-ia-te-dice-lo-que-quieres-oir/",h:"Tu IA te dice lo que quieres oír",s:"Cómo lograr que te diga la verdad",d:"Un estudio de Stanford midió 49% más de aprobación que una persona. 4 prompts para que deje de darte la razón.",m:"6 min"},
   {t:"articulo",h:"38 formas de encontrar una idea de negocio de $1M",s:"Las 10 que yo sí correría, cada una con su prompt",d:"Vas a donde la gente ya se queja en voz alta y dejas que la IA haga la lectura.",m:"12 min"},
   {t:"articulo",h:"Configura Claude como tu asistente",s:"Con un prompt para cada paso",d:"El primer paso para que la IA conozca tu negocio y te responda como alguien de tu equipo.",m:"6 min"},
   {t:"video",h:"Una semana de contenido en 20 minutos",s:"Del brief al calendario",d:"Cómo saco los posts de la semana para un estudio de fitness desde un solo brief.",m:"9 min"},
@@ -397,6 +399,7 @@ document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>set
 const home=document.getElementById('home'),guide=document.getElementById('guide');
 function openGuide(i){
   const it=items[i];
+  if(it.u){location.href=it.u;return}
   document.getElementById('g-title').innerHTML=`${it.h} <em>${it.s}</em>`;
   document.getElementById('g-time').textContent=it.m+(it.t==="video"?" de video":" de lectura");
   home.hidden=true;guide.hidden=false;window.scrollTo(0,0);
