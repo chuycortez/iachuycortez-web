@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Conecta · Tarjeta</title>
+<meta name="description" content="Vista previa de la tarjeta Conecta para Apple Wallet y Google Wallet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#EDECEA; --fg:#111; --muted:#6B6B6B; --line:#D6D3D1;
+    --card:#111111; --card-fg:#FFFFFF; --card-muted:#A3A3A3; --accent:#6FE2AE;
+    --font:"Plus Jakarta Sans","Helvetica Neue",Arial,sans-serif; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#0B0B0B; --fg:#F5F5F4; --muted:#A3A3A3; --line:#262626; --card:#1A1A1A; } }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font-family:var(--font);min-height:100vh;
+    display:flex;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 16px 40px}
+  main{width:100%;max-width:380px}
+  .intro{text-align:center;margin-bottom:22px}
+  .intro .brand{font-weight:800;font-size:15px;letter-spacing:-.02em}
+  .intro .brand span{color:#0B7A63}
+  .intro p{color:var(--muted);font-size:14px;margin-top:6px}
+
+  .pass{background:var(--card);color:var(--card-fg);border-radius:20px;padding:18px 20px 22px;
+    box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 24px 48px -16px rgba(0,0,0,.45)}
+  .p-head{display:flex;align-items:center;justify-content:space-between}
+  .p-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+  .p-logo i{width:26px;height:26px;border-radius:8px;background:var(--card-fg);color:var(--card);
+    display:grid;place-items:center;font-style:normal;font-weight:800;font-size:11px}
+  .p-brand{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--card-muted)}
+  .p-main{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:26px}
+  .lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--card-muted)}
+  .p-name{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-top:2px}
+  .p-photo{width:64px;height:64px;border-radius:14px;object-fit:cover;object-position:center 20%;flex:none}
+  .p-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px 12px;margin-top:20px}
+  .val{font-size:14px;font-weight:600;margin-top:1px;word-break:break-word}
+  .p-qr{margin:24px auto 0;background:#fff;border-radius:12px;padding:12px;width:176px}
+  .p-qr svg,.p-qr img{display:block;width:100%;height:auto}
+  .p-hint{text-align:center;font-size:11px;color:var(--card-muted);margin-top:10px}
+
+  .wallet-btns{display:grid;gap:10px;margin-top:22px}
+  .wbtn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:13px;
+    font:600 14px var(--font);border:1px solid var(--line);color:var(--muted);background:transparent}
+  .wbtn small{font-weight:500;font-size:12px}
+  .open{display:block;text-align:center;margin-top:16px;color:var(--fg);font-weight:600;font-size:14px}
+  .back{display:block;text-align:center;margin-top:28px;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+  <div class="intro">
+    <div class="brand">conecta<span>.</span></div>
+    <p>Así se verá tu tarjeta en Apple Wallet y Google Wallet.</p>
+  </div>
+
+  <div class="pass" role="img" aria-label="Tarjeta Conecta">
+    <div class="p-head">
+      <div class="p-logo"><i id="logo"></i><span id="company"></span></div>
+      <div class="p-brand">CONECTA</div>
+    </div>
+    <div class="p-main">
+      <div>
+        <div class="lbl">Nombre</div>
+        <div class="p-name" id="name"></div>
+      </div>
+      <img class="p-photo" id="photo" alt="">
+    </div>
+    <div class="p-fields">
+      <div><div class="lbl">Puesto</div><div class="val" id="title"></div></div>
+      <div><div class="lbl">Teléfono</div><div class="val" id="phone"></div></div>
+      <div style="grid-column:1/-1"><div class="lbl">Correo</div><div class="val" id="email"></div></div>
+    </div>
+    <div class="p-qr" id="qr"></div>
+    <div class="p-hint">Escanea para guardar mi contacto</div>
+  </div>
+
+  <div class="wallet-btns">
+    <div class="wbtn"> Añadir a Apple Wallet <small>· próximamente</small></div>
+    <div class="wbtn">Añadir a Google Wallet <small>· próximamente</small></div>
+  </div>
+  <a class="open" href="./">Ver lo que ve quien escanea →</a>
+  <a class="back" href="../">iaconchuycortez.com</a>
+</main>
+
+<script src="config.js"></script>
+<script src="qrcode.js"></script>
+<script>
+(function(){
+  var C = window.CONECTA, $ = function(id){ return document.getElementById(id); };
+  $("logo").innerHTML = C.logo ? '<img src="'+C.logo+'" alt="" style="width:100%;height:100%;border-radius:8px">' : C.logoText;
+  $("company").textContent = C.company;
+  $("name").textContent = C.firstName + " " + C.lastName;
+  $("photo").src = C.photo;
+  $("title").textContent = C.title.es;
+  $("phone").textContent = C.phone;
+  $("email").textContent = C.email;
+  // QR points at the profile page that sits next to this file
+  var target = new URL("./", location.href).href;
+  try {
+    var qr = qrcode(0, "M"); qr.addData(target); qr.make();
+    $("qr").innerHTML = qr.createSvgTag({cellSize:4, margin:0, scalable:true});
+  } catch(e) { $("qr").textContent = target; }
+})();
+</script>
+</body>
+</html>
